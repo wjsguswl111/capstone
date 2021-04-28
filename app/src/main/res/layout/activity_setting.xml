@@ -27,7 +27,8 @@
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="71dp"
-        android:text="경고음 변경" />
+        android:text="경고음 변경"
+        />
 
     <TextView
         android:id="@+id/textView4"
