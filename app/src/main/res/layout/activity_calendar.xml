@@ -11,42 +11,28 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="72dp"
+        android:background="#4CAF50"
+        android:fontFamily="@font/black"
         android:gravity="center"
         android:text="캘린더"
-        android:textSize="40dp"
         android:textColor="#FAF8F8"
-        android:background="#4CAF50"
-        />
+        android:textSize="40dp" />
 
-    <CalendarView
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="571dp"
-        tools:layout_editor_absoluteX="80dp"
-        tools:layout_editor_absoulteY="100dp" />
+        android:layout_height="606dp"
+        app:mcv_selectionColor="#00F"
+        app:mcv_showOtherDates="all" />
 
-    <LinearLayout
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:clickable="true"
+        app:srcCompat="@android:drawable/ic_menu_add" />
 
-
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="215dp"
-            android:layout_height="80dp"
-            android:layout_weight="0"
-            app:srcCompat="@android:drawable/ic_menu_my_calendar" />
-
-        <ImageButton
-            android:id="@+id/imageButton4"
-            android:layout_width="215dp"
-            android:layout_height="80dp"
-            android:layout_weight="0"
-            app:srcCompat="@android:drawable/ic_dialog_info" />
-
-
-    </LinearLayout>
 
 </LinearLayout>
