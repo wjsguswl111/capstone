@@ -11,9 +11,11 @@ import android.os.Bundle;
 import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 //import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+
 
 public class Setting extends AppCompatActivity implements View.OnClickListener{
         private final static String TAG = "Setting";
