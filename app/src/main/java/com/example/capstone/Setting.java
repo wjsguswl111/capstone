@@ -13,11 +13,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-//import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Toast;
 
 
 public class Setting extends AppCompatActivity implements View.OnClickListener{
+
+
+
+
+
         private final static String TAG = "Setting";
         private final static int REQUESTCODE_RINGTONE_PICKER = 1000;
 
@@ -48,7 +53,7 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
             if(mRtCurrent == null){
                 throw new Exception("Can't play player");
             }
-            //m_tvRingtoneTitle.setText(mRtCurrent.getTitle(this));
+            m_tvRingtoneTitle.setText(mRtCurrent.getTitle(this));
 
             mRtCurrent.play();
         }
@@ -92,7 +97,7 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
 
                 if(ring != null){
                     m_strRingToneUri = ring.toString();
-                    //m_tvRingtoneUri.setText(ring.toString());
+                    m_tvRingtoneUri.setText(ring.toString());
                     this.startRingtone(ring);
                 } else{
                     m_strRingToneUri = null;
