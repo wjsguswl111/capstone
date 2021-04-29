@@ -9,4 +9,16 @@
         android:fontStyle="normal"
         android:font = "@font/mlight"/>
 
+    <font
+        android:fontStyle="normal"
+        android:font = "@font/black"/>
+
+    <font
+        android:fontStyle="normal"
+        android:font = "@font/bold"/>
+
+    <font
+        android:fontStyle="normal"
+        android:font = "@font/reguler"/>
+
 </font-family>

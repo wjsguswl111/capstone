@@ -1,28 +1,20 @@
 package com.example.capstone;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+//import android.support.v7.app.AppCompatActivity;
 
 public class Setting extends AppCompatActivity implements View.OnClickListener{
-
-
-
-
-
         private final static String TAG = "Setting";
         private final static int REQUESTCODE_RINGTONE_PICKER = 1000;
 
@@ -53,15 +45,17 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
             if(mRtCurrent == null){
                 throw new Exception("Can't play player");
             }
-            m_tvRingtoneTitle.setText(mRtCurrent.getTitle(this));
+            //m_tvRingtoneTitle.setText(mRtCurrent.getTitle(this));
 
             mRtCurrent.play();
+            mRtCurrent.stop();
         }
         catch(Exception e){
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             Log.e(TAG, e.getMessage());
             e.printStackTrace();
         }
+        mRtCurrent.stop();
     }
 
     private void releaseRingtone(){
@@ -97,7 +91,7 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
 
                 if(ring != null){
                     m_strRingToneUri = ring.toString();
-                    m_tvRingtoneUri.setText(ring.toString());
+                    //m_tvRingtoneUri.setText(ring.toString());
                     this.startRingtone(ring);
                 } else{
                     m_strRingToneUri = null;

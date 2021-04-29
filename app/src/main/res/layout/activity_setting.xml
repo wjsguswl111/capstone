@@ -11,42 +11,37 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#4CAF50"
+        android:background="#CF9BEF"
         android:gravity="center"
+        android:fontFamily="@font/black"
         android:text="설정"
         android:textColor="#FAF8F8"
-        android:textSize="40dp"
-        android:fontFamily="@font/mbold"/>
+        android:textSize="40dp" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="match_parent"
         android:layout_height="71dp"
+        android:fontFamily="@font/reguler"
         android:text="시간 설정"
-        android:fontFamily="@font/mlight"
-        android:textColor = "#FFFFFF"
-        android:textSize = "20dp"
-        android:background="#8BC34A"/>
+        android:translationY="10dp" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="71dp"
+        android:fontFamily="@font/reguler"
         android:text="경고음 변경"
-        android:background="#8BC34A"
-        android:fontFamily="@font/mlight"
-        android:textColor="#FFFFFF"
-        android:textSize="20dp"
-        />
+        android:translationY="10dp" />
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="match_parent"
+        android:layout_width="401dp"
         android:layout_height="45dp"
+        android:fontFamily="@font/reguler"
         android:text="음량 조절"
-        android:fontFamily="@font/mlight"
-        android:textSize="20dp"
-        android:gravity="left"/>
+        android:translationX="10dp"
+        android:translationY="10dp" />
 
     <SeekBar
         android:id="@+id/seekBar"
@@ -55,11 +50,10 @@
 
     <Switch
         android:id="@+id/switch1"
-        android:layout_width="match_parent"
+        android:layout_width="393dp"
         android:layout_height="57dp"
+        android:fontFamily="@font/reguler"
         android:text="기기 전원 설정"
-        android:fontFamily="@font/mlight"
-        android:gravity="left"
-        android:textSize="20dp"/>
+        android:translationX="10dp" />
 
 </LinearLayout>
