@@ -14,7 +14,6 @@ public class Calendar extends AppCompatActivity {
 }*/
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,14 +22,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-public class Calendar extends Activity {
+public class Calendar extends AppCompatActivity {
 
-    public String fname=null; //파일 이름 널값
-    public String str=null; //
+    public String fname=null;
+    public String str=null;
     public CalendarView calendarView;
     public Button cha_Btn,del_Btn,save_Btn;
     public TextView diaryTextView,textView2;
@@ -46,7 +46,6 @@ public class Calendar extends Activity {
         del_Btn=findViewById(R.id.del_Btn);
         cha_Btn=findViewById(R.id.cha_Btn);
         textView2=findViewById(R.id.textView2);
-        //textView3=findViewById(R.id.textView3);
         contextEditText=findViewById(R.id.contextEditText);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -139,7 +138,6 @@ public class Calendar extends Activity {
             e.printStackTrace();
         }
     }
-
     @SuppressLint("WrongConstant")
     public void removeDiary(String readDay){
         FileOutputStream fos=null;
@@ -147,6 +145,7 @@ public class Calendar extends Activity {
         try{
             fos=openFileOutput(readDay,MODE_NO_LOCALIZED_COLLATORS);
             String content="";
+            deleteFile(readDay);
             fos.write((content).getBytes());
             fos.close();
 
@@ -154,7 +153,6 @@ public class Calendar extends Activity {
             e.printStackTrace();
         }
     }
-
     @SuppressLint("WrongConstant")
     public void saveDiary(String readDay){
         FileOutputStream fos=null;

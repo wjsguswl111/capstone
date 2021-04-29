@@ -1,19 +1,18 @@
 package com.example.capstone;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-//import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+//import android.support.v7.app.AppCompatActivity;
 
 public class Setting extends AppCompatActivity implements View.OnClickListener{
         private final static String TAG = "Setting";
@@ -49,12 +48,14 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
             //m_tvRingtoneTitle.setText(mRtCurrent.getTitle(this));
 
             mRtCurrent.play();
+            mRtCurrent.stop();
         }
         catch(Exception e){
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             Log.e(TAG, e.getMessage());
             e.printStackTrace();
         }
+        mRtCurrent.stop();
     }
 
     private void releaseRingtone(){
