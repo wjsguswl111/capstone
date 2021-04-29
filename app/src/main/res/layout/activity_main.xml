@@ -14,7 +14,7 @@
         android:layout_height="200dp"
         android:layout_gravity="center"
         android:text="캘린더"
-        android:translationY="100dp"
+        android:translationY="150dp"
         android:textSize="40dp"
         android:background="#CF9BEF"
         android:textColor="#FDFCFC"/>
@@ -27,7 +27,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="설정"
-        android:translationY="150dp"
+        android:translationY="200dp"
         android:textSize="40dp"
         android:background="#CF9BEF"
         android:textColor="#FDFCFC"/>
