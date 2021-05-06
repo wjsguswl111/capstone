@@ -15,7 +15,7 @@
         android:layout_height="200dp"
         android:layout_gravity="center"
         android:text="캘린더"
-        android:translationY="160dp"
+        android:translationY="150dp"
         android:textSize="40dp"
         android:background="#CF9BEF"
         android:textColor="#FDFCFC"/>
