@@ -79,8 +79,8 @@ public class Calendar extends AppCompatActivity {
     }
 
     public void  checkDay(int cYear,int cMonth,int cDay){
-        fname=""+cYear+"-"+(cMonth+1)+""+"-"+cDay+".txt";//저장할 파일 이름설정
-        FileInputStream fis=null;//FileStream fis 변수
+        fname=""+cYear+"-"+(cMonth+1)+""+"-"+cDay+".txt";
+        FileInputStream fis=null;
 
         try{
             fis=openFileInput(fname);
@@ -132,6 +132,7 @@ public class Calendar extends AppCompatActivity {
                 cha_Btn.setVisibility(View.INVISIBLE);
                 del_Btn.setVisibility(View.INVISIBLE);
                 contextEditText.setVisibility(View.VISIBLE);
+                deleteFile(fname);
             }
 
         }catch (Exception e){
@@ -143,16 +144,12 @@ public class Calendar extends AppCompatActivity {
         FileOutputStream fos=null;
 
         try{
-            fos=openFileOutput(readDay,MODE_NO_LOCALIZED_COLLATORS);
-            String content="";
             deleteFile(readDay);
-            fos.write((content).getBytes());
-            fos.close();
-
         }catch (Exception e){
             e.printStackTrace();
         }
     }
+
     @SuppressLint("WrongConstant")
     public void saveDiary(String readDay){
         FileOutputStream fos=null;
