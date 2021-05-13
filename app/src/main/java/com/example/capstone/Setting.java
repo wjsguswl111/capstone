@@ -1,18 +1,19 @@
 package com.example.capstone;
 
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-//import android.support.v7.app.AppCompatActivity;
 
 public class Setting extends AppCompatActivity implements View.OnClickListener{
         private final static String TAG = "Setting";
@@ -20,6 +21,9 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
 
         private RingtoneManager mRtm;
         private Ringtone mRtCurrent;
+
+        SeekBar seekBar;
+        AudioManager maudioManager = null;
 
         private TextView m_tvRingtoneUri;
         private String m_strRingToneUri;
@@ -34,6 +38,32 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
         mRtm = new RingtoneManager(this);
 
         this.findViewById(R.id.button).setOnClickListener(this);
+
+        seekBar = findViewById(R.id.seekBar);
+
+        maudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        int maxVol = maudioManager.getStreamMaxVolume(AudioManager.STREAM_RING);
+        seekBar.setMax(maxVol);
+        int nCurrentVoumn = maudioManager.getStreamVolume(AudioManager.STREAM_RING);
+        seekBar.setProgress(nCurrentVoumn);
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                maudioManager.setStreamVolume(AudioManager.STREAM_RING, i, AudioManager.FLAG_SHOW_UI);
+                mRtCurrent.play();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
 
@@ -45,7 +75,6 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
             if(mRtCurrent == null){
                 throw new Exception("Can't play player");
             }
-            //m_tvRingtoneTitle.setText(mRtCurrent.getTitle(this));
 
             mRtCurrent.play();
             mRtCurrent.stop();
@@ -80,6 +109,7 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
         }
 
         this.startActivityForResult(intent, REQUESTCODE_RINGTONE_PICKER);
+
     }
 
     @Override
@@ -107,6 +137,7 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
         switch (view.getId()){
             case R.id.button:
                 showRingtoneChooser();
+                //releaseRingtone();
                 break;
         }
     }
@@ -115,4 +146,6 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
+
 }
