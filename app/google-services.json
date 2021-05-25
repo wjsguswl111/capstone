@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "684071279091",
+    "project_id": "tkacoth",
+    "storage_bucket": "tkacoth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:684071279091:android:e2a6c01c4062ef636f5a86",
+        "android_client_info": {
+          "package_name": "com.example.capstone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "684071279091-m8151lauqeon6m6363g9nh26gotaci2g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.capstone",
+            "certificate_hash": "50ed9f77f625a43f516a02696342765536919d05"
+          }
+        },
+        {
+          "client_id": "684071279091-4cead4rq44kfpvh1kb4ofmjudnb2bro5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwXi_V1C5n9ZFeaXW2qqU8ZOq-HGjFpoU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "684071279091-4cead4rq44kfpvh1kb4ofmjudnb2bro5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
