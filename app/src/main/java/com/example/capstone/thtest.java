@@ -58,12 +58,16 @@ public class thtest extends Thread{
         }
     }
     public void send(String date) throws IOException{
-       byte[] inst =  date.getBytes();
-       dataOutputStream.write(inst);
+        if(date != null) {
+            byte[] inst = date.getBytes();
+            dataOutputStream.write(inst);
+        }
     }
     public void sends(String content, String date) throws IOException{
-        String temp = date + " " + content;
-        byte[] inst =  temp.getBytes();
-        dataOutputStream.write(inst);
+        if(date != null && content != null) {
+            String temp = date + " " + content;
+            byte[] inst = temp.getBytes();
+            dataOutputStream.write(inst);
+        }
     }
 }
