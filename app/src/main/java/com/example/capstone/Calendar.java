@@ -1,64 +1,62 @@
 package com.example.capstone;
+/*
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
+public class Calendar extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_calendar);
+    }
+}*/
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.Socket;
 
 public class Calendar extends AppCompatActivity {
 
-    public class Memo {
-        public String title;
-        public String context;
+    //소켓통신
+    //public InputStream dataInputStream;
+    public OutputStream dataOutputStream;
+    private Socket socket;
+    private String ip = "192.168.219.199";
+    private int port = 5900;
+    final String TAG = "TAG+Thread";
+    Thread thread;
 
-        public Memo(){}
-
-        public Memo(String title, String context) {
-            this.title = title;
-            this.context = context;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getContext(String title) {
-            return this.context;
-        }
-
-        public String setContext(String context) {
-            this.context = context;
-        }
-
-        public String memoString() {
-            return "Memo{" + "title='" + title + '\'' +
-                    ", context='" + context + '\'' +
-                    '}';
-        }
-
-    }
-
-    public DatabaseReference mDatabase;
     public String fname=null;
     public String str=null;
     public CalendarView calendarView;
     public Button cha_Btn,del_Btn,save_Btn;
     public TextView diaryTextView,textView2;
     public EditText contextEditText;
+    Handler handler = new Handler(Looper.getMainLooper());
+
+    /*
+    public void turnOn() throws IOException{
+        byte[] inst = "On".getBytes();
+        dataOutputStream.write(inst);
+    }
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,27 +84,34 @@ public class Calendar extends AppCompatActivity {
                 checkDay(year,month,dayOfMonth);
             }
         });
-
         save_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 saveDiary(fname);
                 str=contextEditText.getText().toString();
-                textView2.setText(str);
                 save_Btn.setVisibility(View.INVISIBLE);
                 cha_Btn.setVisibility(View.VISIBLE);
                 del_Btn.setVisibility(View.VISIBLE);
                 contextEditText.setVisibility(View.INVISIBLE);
                 textView2.setVisibility(View.VISIBLE);
-
+                textView2.setText(str);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            ((MainActivity)MainActivity.context).thtest.sends(str,fname);
+                        }catch (IOException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             }
         });
     }
 
     public void  checkDay(int cYear,int cMonth,int cDay){
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        fname=""+cYear+"-"+(cMonth+1)+""+"-"+cDay+".txt";
+        fname=""+cYear+"-"+(cMonth+1)+"-"+cDay+".txt";
         FileInputStream fis=null;
 
         try{
@@ -143,6 +148,16 @@ public class Calendar extends AppCompatActivity {
             del_Btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                ((MainActivity)MainActivity.context).thtest.send(fname);
+                            }catch (IOException e){
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
                     textView2.setVisibility(View.INVISIBLE);
                     contextEditText.setText("");
                     contextEditText.setVisibility(View.VISIBLE);
@@ -169,7 +184,6 @@ public class Calendar extends AppCompatActivity {
     @SuppressLint("WrongConstant")
     public void removeDiary(String readDay){
         FileOutputStream fos=null;
-
         try{
             deleteFile(readDay);
         }catch (Exception e){
@@ -179,15 +193,15 @@ public class Calendar extends AppCompatActivity {
 
     @SuppressLint("WrongConstant")
     public void saveDiary(String readDay){
-        String context = contextEditText.getText().toString();
-        Memo memo = new Memo(readDay, context);
+        FileOutputStream fos=null;
 
-        mDatabase.child("Memos").child(readDay).setValue(memo)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(Calendar.this, "저장을 했")
-                    }
-                })
+        try{
+            fos=openFileOutput(readDay,MODE_NO_LOCALIZED_COLLATORS);
+            String content=contextEditText.getText().toString();
+            fos.write((content).getBytes());
+            fos.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
