@@ -5,6 +5,7 @@ from tkinter.filedialog import*
 from gtts import gTTS
 from pygame import*
 import datetime
+from pydub import AudioSegment
 
 HOST = "192.168.219.199"
 PORT = 5900
@@ -29,22 +30,29 @@ while True:
     #수신한 데이터로 파이를 컨트롤
     res = data
     print("파이 동작 : " + res)
-
-    #데이터 txt로 저장
+    
     date, cont = res.split('.txt')
-    te = res.split('.txt')
-    print(te)
     Tdate = date + '.txt'
+    year, month, day = date.split('-')
+        
+    if len(month)==1:
+        month = '0' + month
+    if len(day)==1:
+        day = '0' + day
+            
+    date = year+'-'+month+'-'+day
     
     #삭제
     if cont == '':
         os.remove("/home/pi/"+Tdate)
         os.remove("/home/pi/"+date+'.mp3')
+        os.remove("/home/pi/"+date+'.wav')
     
     #수정
     elif os.path.isfile("/home/pi/"+Tdate) == True:
         os.remove("/home/pi/"+Tdate)
         os.remove("/home/pi/"+date+'.mp3')
+        os.remove("/home/pi/"+date+'.wav')
         myFile = open(Tdate, "w")
         myFile.write(cont)
         myFile.close()
@@ -52,24 +60,26 @@ while True:
         myFile = open(Tdate, "r")
         sText = myFile.read()
         tts = gTTS(text=sText, lang='ko', slow=False)
-        #sSaveFile = date + '.mp3'
         tts.save(date+'.mp3')
+        src = date + '.mp3'
+        song = AudioSegment.from_mp3(src)
+        song.export(date+'.wav', 'wav')
 
 
     #생성
     else:
         myFile = open(Tdate, "w")
         Fcont, Tcont = cont.split(' ')
-        print(Tcont)
         myFile.write(Tcont)
         myFile.close()
 
         myFile = open(Tdate, "r")
         sText = myFile.read()
-        print(sText)
         tts = gTTS(text=sText, lang='ko', slow=False)
-        #sSaveFile = date + '.mp3'
         tts.save(date+'.mp3')
+        src = date + '.mp3'
+        song = AudioSegment.from_mp3(src)
+        song.export(date+'.wav', 'wav')
 
     myFile.close()
 
