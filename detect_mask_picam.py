@@ -11,6 +11,7 @@ import imutils
 import time
 import cv2
 import os
+import server
 
 def detect_and_predict_mask(frame, faceNet, maskNet):
 	# grab the dimensions of the frame and then construct a blob
@@ -130,18 +131,19 @@ while True:
 		# determine the class label and color we'll use to draw
 		# the bounding box and text
 		if mask > withoutMask:
-			label = "Thank You. Mask On."
-			color = (0, 255, 0)
-                        if os.path.isfile("/home/pi"+Date+'.txt') == True:
-                            pygame.mixer.init()
-                            sound = pygame.mixer.sound('/home/pi/'+Date+'.mp3')
-                            sound.play()
+                    label = "Thank You. Mask On."
+                    color = (0, 255, 0)
+                    if os.path.isfile("/home/pi/"+Date+'.wav') == True:
+                        pygame.mixer.init()
+                        sound = pygame.mixer.Sound('/home/pi/'+Date+'.wav')
+                        sound.play()
+                        time.sleep(10)
 
 		else:
                     label = "No Face Mask Detected"
                     color = (0, 0, 255)
                     pygame.mixer.init()
-                    sound = pygame.mixer.sound('/home/pi/face_mask_detection/sonic.wav')
+                    sound = pygame.mixer.Sound('/home/pi/face_mask_detection/sonic.wav')
                     sound.play()
                     time.sleep(2)
                     sound.stop()
