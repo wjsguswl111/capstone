@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+//전원소켓통신하기
 public class Setting extends AppCompatActivity implements View.OnClickListener{
         private final static String TAG = "Setting";
         private final static int REQUESTCODE_RINGTONE_PICKER = 1000;
