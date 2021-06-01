@@ -1,32 +1,4 @@
 package com.example.capstone;
-/*
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-
-import com.prolificinteractive.materialcalendarview.CalendarDay;
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-
-public class Calendar extends AppCompatActivity {
-    private com.google.android.material.floatingactionbutton.FloatingActionButton FButton;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calendar);
-
-        FButton = findViewById(R.id.floatingActionButton);
-        FButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Calendar.this, schedule.class);
-                startActivity(intent);
-            }
-        });
-    }
-}*/
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -35,15 +7,52 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 public class Calendar extends AppCompatActivity {
 
+    public class Memo {
+        public String title;
+        public String context;
+
+        public Memo(){}
+
+        public Memo(String title, String context) {
+            this.title = title;
+            this.context = context;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getContext(String title) {
+            return this.context;
+        }
+
+        public String setContext(String context) {
+            this.context = context;
+        }
+
+        public String memoString() {
+            return "Memo{" + "title='" + title + '\'' +
+                    ", context='" + context + '\'' +
+                    '}';
+        }
+
+    }
+
+    public DatabaseReference mDatabase;
     public String fname=null;
     public String str=null;
     public CalendarView calendarView;
@@ -95,6 +104,8 @@ public class Calendar extends AppCompatActivity {
     }
 
     public void  checkDay(int cYear,int cMonth,int cDay){
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         fname=""+cYear+"-"+(cMonth+1)+""+"-"+cDay+".txt";
         FileInputStream fis=null;
 
@@ -168,17 +179,15 @@ public class Calendar extends AppCompatActivity {
 
     @SuppressLint("WrongConstant")
     public void saveDiary(String readDay){
-        FileOutputStream fos=null;
+        String context = contextEditText.getText().toString();
+        Memo memo = new Memo(readDay, context);
 
-        try{
-            fos=openFileOutput(readDay,MODE_NO_LOCALIZED_COLLATORS);
-            String content=contextEditText.getText().toString();
-            fos.write((content).getBytes());
-            fos.close();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        mDatabase.child("Memos").child(readDay).setValue(memo)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(Calendar.this, "저장을 했")
+                    }
+                })
     }
-
-
 }
