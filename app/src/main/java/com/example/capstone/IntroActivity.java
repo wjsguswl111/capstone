@@ -3,8 +3,9 @@ package com.example.capstone;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class IntroActivity extends MainActivity{
+public class IntroActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -18,7 +19,7 @@ public class IntroActivity extends MainActivity{
                 startActivity(intent);
                 finish();
             }
-        },3000);
+        },1000);
     }
     @Override
     protected void onPause() {
