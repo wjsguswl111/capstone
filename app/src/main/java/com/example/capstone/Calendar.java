@@ -96,16 +96,6 @@ public class Calendar extends AppCompatActivity {
                 contextEditText.setVisibility(View.INVISIBLE);
                 textView2.setVisibility(View.VISIBLE);
                 textView2.setText(str);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            ((MainActivity)MainActivity.context).thtest.sends(str,fname);
-                        }catch (IOException e){
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
             }
         });
     }
@@ -148,16 +138,6 @@ public class Calendar extends AppCompatActivity {
             del_Btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                ((MainActivity)MainActivity.context).thtest.send(fname);
-                            }catch (IOException e){
-                                e.printStackTrace();
-                            }
-                        }
-                    }).start();
                     textView2.setVisibility(View.INVISIBLE);
                     contextEditText.setText("");
                     contextEditText.setVisibility(View.VISIBLE);
@@ -186,6 +166,16 @@ public class Calendar extends AppCompatActivity {
         FileOutputStream fos=null;
         try{
             deleteFile(readDay);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        ((MainActivity)MainActivity.context).thtest.send(fname);
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -194,12 +184,21 @@ public class Calendar extends AppCompatActivity {
     @SuppressLint("WrongConstant")
     public void saveDiary(String readDay){
         FileOutputStream fos=null;
-
         try{
             fos=openFileOutput(readDay,MODE_NO_LOCALIZED_COLLATORS);
             String content=contextEditText.getText().toString();
             fos.write((content).getBytes());
             fos.close();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        ((MainActivity)MainActivity.context).thtest.sends(content,readDay);
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
         }catch (Exception e){
             e.printStackTrace();
         }

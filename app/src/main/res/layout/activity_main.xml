@@ -16,7 +16,7 @@
         android:text="캘린더"
         android:translationY="150dp"
         android:textSize="40dp"
-        android:background="#CF9BEF"
+        android:background="#CA8DF7"
         android:textColor="#FDFCFC"/>
 
     <Button
@@ -29,7 +29,7 @@
         android:text="설정"
         android:translationY="200dp"
         android:textSize="40dp"
-        android:background="#CF9BEF"
+        android:background="#CA8DF7"
         android:textColor="#FDFCFC"/>
 
 </LinearLayout>

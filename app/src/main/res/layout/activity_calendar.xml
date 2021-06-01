@@ -12,7 +12,7 @@
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#CF9BEF"
+        android:background="#CA8DF7"
         android:gravity="center"
         android:fontFamily="@font/black"
         android:text="캘린더"
