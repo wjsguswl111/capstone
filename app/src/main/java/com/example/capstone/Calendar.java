@@ -29,19 +29,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.Socket;
 
 public class Calendar extends AppCompatActivity {
-
-    //소켓통신
-    //public InputStream dataInputStream;
-    public OutputStream dataOutputStream;
-    private Socket socket;
-    private String ip = "192.168.219.199";
-    private int port = 5900;
-    final String TAG = "TAG+Thread";
-    Thread thread;
 
     public String fname=null;
     public String str=null;
