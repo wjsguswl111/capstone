@@ -9,25 +9,38 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-//전원소켓통신하기
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.Socket;
+
+
 public class Setting extends AppCompatActivity implements View.OnClickListener{
-        private final static String TAG = "Setting";
-        private final static int REQUESTCODE_RINGTONE_PICKER = 1000;
+    public OutputStream dataOutputStream;
+    private Socket socket;
+    private String ip = "192.168.219.199";
+    private int port = 5900;
 
-        private RingtoneManager mRtm;
-        private Ringtone mRtCurrent;
+    Thread thread;
+    private final static String TAG = "Setting";
+    private final static int REQUESTCODE_RINGTONE_PICKER = 1000;
 
-        SeekBar seekBar;
-        AudioManager maudioManager = null;
+    private RingtoneManager mRtm;
+    private Ringtone mRtCurrent;
 
-        private TextView m_tvRingtoneUri;
-        private String m_strRingToneUri;
-        private TextView m_tvRingtoneTitle;
+    SeekBar seekBar;
+    AudioManager maudioManager = null;
+
+    private TextView m_tvRingtoneUri;
+    private String m_strRingToneUri;
+    private TextView m_tvRingtoneTitle;
 
 
     @Override
@@ -64,6 +77,38 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
 
             }
         });
+
+        Switch sw = (Switch)findViewById(R.id.switch1);
+
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
+                if(isChecked==true){
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                ((MainActivity)MainActivity.context).thtest.send("ON");
+                            }catch (IOException e){
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+                }
+                else{
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                ((MainActivity)MainActivity.context).thtest.send("OFF");
+                            }catch (IOException e){
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+                }
+            }
+        });
     }
 
 
@@ -75,7 +120,6 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
             if(mRtCurrent == null){
                 throw new Exception("Can't play player");
             }
-
             mRtCurrent.play();
             mRtCurrent.stop();
         }
@@ -146,6 +190,8 @@ public class Setting extends AppCompatActivity implements View.OnClickListener{
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
+
 
 
 }

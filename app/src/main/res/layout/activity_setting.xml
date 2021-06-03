@@ -54,6 +54,7 @@
         android:layout_height="57dp"
         android:fontFamily="@font/reguler"
         android:text="기기 전원 설정"
+        android:checked="true"
         android:translationX="10dp" />
 
 </LinearLayout>
