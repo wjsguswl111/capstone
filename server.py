@@ -69,15 +69,15 @@ while True:
     
     #삭제
     if cont == '':
-        os.remove("/home/pi/"+Tdate)
-        os.remove("/home/pi/"+date+'.mp3')
-        os.remove("/home/pi/"+date+'.wav')
+        os.remove("/home/pi/face_mask_detection/"+Tdate)
+        os.remove("/home/pi/face_mask_detection/"+date+'.mp3')
+        os.remove("/home/pi/face_mask_detection/"+date+'.wav')
     
     #수정
-    elif os.path.isfile("/home/pi/"+Tdate) == True:
-        os.remove("/home/pi/"+Tdate)
-        os.remove("/home/pi/"+date+'.mp3')
-        os.remove("/home/pi/"+date+'.wav')
+    elif os.path.isfile("/home/pi/face_mask_detection/"+Tdate) == True:
+        os.remove("/home/pi/face_mask_detection/"+Tdate)
+        os.remove("/home/pi/face_mask_detection/"+date+'.mp3')
+        os.remove("/home/pi/face_mask_detection/"+date+'.wav')
         myFile = open(Tdate, "w")
         myFile.write(cont)
         myFile.close()
