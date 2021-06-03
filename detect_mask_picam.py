@@ -11,7 +11,11 @@ import imutils
 import time
 import cv2
 import os
-import server
+from os import system
+import sys
+#sys.path.append('/home/pi')
+#import server
+
 
 def detect_and_predict_mask(frame, faceNet, maskNet):
 	# grab the dimensions of the frame and then construct a blob
@@ -111,42 +115,51 @@ Date = now.strftime('%Y-%m-%d')
 
 # loop over the frames from the video stream
 while True:
+    if os.path.isfile('/home/pi/face_mask_detection/stat.txt')==True:
+        system("python3 /home/pi/face_mask_detection/server.py")
+        file = open('stat.txt', 'r')
+        f = file.read()
+        if f == "OFF":
+            sys.exit()
+
+    #if server.OnOff(res) == False:
+    #    sys.exit()
 	# grab the frame from the threaded video stream and resize it
 	# to have a maximum width of 400 pixels
-	frame = vs.read()
-	frame = imutils.resize(frame, width=500)
+    frame = vs.read()
+    frame = imutils.resize(frame, width=500)
 
 	# detect faces in the frame and determine if they are wearing a
 	# face mask or not
-	(locs, preds) = detect_and_predict_mask(frame, faceNet, maskNet)
+    (locs, preds) = detect_and_predict_mask(frame, faceNet, maskNet)
 
 	# loop over the detected face locations and their corresponding
 	# locations
 
-	for (box, pred) in zip(locs, preds):
+    for (box, pred) in zip(locs, preds):
 		# unpack the bounding box and predictions
-		(startX, startY, endX, endY) = box
-		(mask, withoutMask) = pred
+	    (startX, startY, endX, endY) = box
+	    (mask, withoutMask) = pred
 
 		# determine the class label and color we'll use to draw
 		# the bounding box and text
-		if mask > withoutMask:
-                    label = "Thank You. Mask On."
-                    color = (0, 255, 0)
-                    if os.path.isfile("/home/pi/"+Date+'.wav') == True:
-                        pygame.mixer.init()
-                        sound = pygame.mixer.Sound('/home/pi/'+Date+'.wav')
-                        sound.play()
-                        time.sleep(10)
-
-		else:
-                    label = "No Face Mask Detected"
-                    color = (0, 0, 255)
+	    if mask > withoutMask:
+                label = "Thank You. Mask On."
+                color = (0, 255, 0)
+                if os.path.isfile("/home/pi/"+Date+'.wav') == True:
                     pygame.mixer.init()
-                    sound = pygame.mixer.Sound('/home/pi/face_mask_detection/sonic.wav')
+                    sound = pygame.mixer.Sound('/home/pi/'+Date+'.wav')
                     sound.play()
-                    time.sleep(2)
-                    sound.stop()
+                    time.sleep(10)
+
+	    else:
+                label = "No Face Mask Detected"
+                color = (0, 0, 255)
+                pygame.mixer.init()
+                sound = pygame.mixer.Sound('/home/pi/face_mask_detection/sonic.wav')
+                sound.play()
+                time.sleep(2)
+                sound.stop()
 		
 		#label = "Thank you" if mask > withoutMask else "Please wear your face mask"
 		#color = (0, 255, 0) if label == "Thank you" else (0, 0, 255)
@@ -156,17 +169,17 @@ while True:
 
 		# display the label and bounding box rectangle on the output
 		# frame
-		cv2.putText(frame, label, (startX-50, startY - 10),
-			cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 2)
-		cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
+	    cv2.putText(frame, label, (startX-50, startY - 10),
+		    cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 2)
+	    cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
 
 	# show the output frame
-	cv2.imshow("Face Mask Detector", frame)
-	key = cv2.waitKey(1) & 0xFF
+    cv2.imshow("Face Mask Detector", frame)
+    key = cv2.waitKey(1) & 0xFF
 
 	# if the `q` key was pressed, break from the loop
-	if key == ord("q"):
-		break
+    if key == ord("q"):
+	    break
 
 # do a bit of cleanup
 cv2.destroyAllWindows()
