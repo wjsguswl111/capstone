@@ -140,9 +140,9 @@ while True:
 	    if mask > withoutMask:
                 label = "Thank You. Mask On."
                 color = (0, 255, 0)
-                if os.path.isfile("/home/pi/"+Date+'.wav') == True:
+                if os.path.isfile("/home/pi/face_mask_detection/"+Date+'.wav') == True:
                     pygame.mixer.init()
-                    sound = pygame.mixer.Sound('/home/pi/'+Date+'.wav')
+                    sound = pygame.mixer.Sound('/home/pi/face_mask_detection/'+Date+'.wav')
                     sound.play()
                     time.sleep(10)
 
