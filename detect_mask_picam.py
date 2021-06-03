@@ -115,12 +115,6 @@ Date = now.strftime('%Y-%m-%d')
 
 # loop over the frames from the video stream
 while True:
-    if os.path.isfile('/home/pi/face_mask_detection/stat.txt')==True:
-        system("python3 /home/pi/face_mask_detection/server.py")
-        file = open('stat.txt', 'r')
-        f = file.read()
-        if f == "OFF":
-            sys.exit()
 
     #if server.OnOff(res) == False:
     #    sys.exit()
