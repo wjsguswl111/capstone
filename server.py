@@ -6,6 +6,16 @@ from gtts import gTTS
 from pygame import*
 import datetime
 from pydub import AudioSegment
+from os import system
+import sys
+import subprocess
+
+def OnOff(n):
+    if n == "ON":
+        system("python3 /home/pi/face_mask_detection/detect_mask_picam.py")
+    elif n == "OFF":
+        #return False
+        os.system('taskkill /f /im detect_mask_picam.py')
 
 HOST = "192.168.219.199"
 PORT = 5900
@@ -17,6 +27,9 @@ s.listen(1)
 print('Socket now listening')
 
 while True:
+
+    #system("python3 /home/pi/face_mask_detection/detect_mask_picam.py")
+
     #접속 승인
     conn, addr = s.accept()
     print("Connected by ", addr)
@@ -30,6 +43,18 @@ while True:
     #수신한 데이터로 파이를 컨트롤
     res = data
     print("파이 동작 : " + res)
+
+    if res == "ON" or res == "OFF":
+        if os.path.isfile("/home/pi/face_mask_detection/stat.txt") == True:
+            os.remove('/home/pi/face_mask_detection/stat.txt')
+            file = open('stat.txt', 'w')
+            file.write(res)
+            file.close()
+        else:
+            file = open('stat.txt', 'w')
+            file.write(res)
+            file.close()
+        OnOff(res)
     
     date, cont = res.split('.txt')
     Tdate = date + '.txt'
